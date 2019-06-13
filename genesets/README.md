@@ -1,4 +1,4 @@
-This folder contains genesets generated from other data sources used in the study.
+This folder contains genesets generated from other data sources used in the study:
 
 * F480highlow.RDS - murine fetal kidney F4/80 high vs F4/80 low macrophages
 * M1 M2 markers.RDS	 - M1 vs M2 macrophage polarisation
