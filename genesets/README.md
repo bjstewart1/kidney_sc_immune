@@ -7,3 +7,4 @@ This folder contains genesets generated from other data sources used in the stud
 * menon_fetal_nephron_genesets.RDS - Markers of human fetal nephron (Menon et al.) 
 * skin_genesets.RDS - genesets from differential expression of skin macrophages vs DC
 * villani_DC_genesets.RDS - genesets from Villani et al. DC subsets.
+* tissue_residency.RDS - geneset from reanalysis of a murine Hobit/Blimp tissue residency signature (Mackay et al.)
