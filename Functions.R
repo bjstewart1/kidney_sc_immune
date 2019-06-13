@@ -446,3 +446,30 @@ connectedBarplot <- function(dat, color=rainbow(nrow(dat)), space=1, alpha=0.5, 
   }              
 }      
 
+
+#do a mean mean plot
+#' @cluster_1 - the x axis cluster
+#' @cluster_2 - the y axis cluster
+#' @cluster_universe - all the cluster IDS in the sce
+#' @sce the sce
+#' @size - point size
+#' @nselect - the number of genes with high fold changes to plot
+
+mean_mean_plot <- function(cluster_1, cluster_2, cluster_universe, sce, size = 0.5, nselect = 10){
+  require(ggrepel)
+  xax <- calcAverage(sce[, cluster_universe == cluster_1], use_size_factors=FALSE, exprs_values = "logcounts")
+  yax <- calcAverage(sce[, cluster_universe == cluster_2], use_size_factors=FALSE, exprs_values = "logcounts")
+  lfc <- xax - yax
+  dat <-  data.frame(xax, yax, lfc, "Symbol" = rowData(sce)$Symbol)
+  lfc <- lfc[order(lfc)]
+  top_genes <- c(names(head(lfc, nselect)), names(tail(lfc, nselect)))
+  dat$label <- NA
+  dat[top_genes, "label"] <- as.character(dat[top_genes, "Symbol"])
+  dat$color <-2
+  dat[top_genes, "color"] <- 1
+  dat[dat$lfc == 0, "label"] <- NA
+  dat[dat$lfc == 0, "color"] <- 2
+  ggplot(dat, aes(x= xax, y=yax, label = label, color = color)) +xlab(paste(cluster_1))+ylab(paste(cluster_2)) + geom_point(size =size) + 
+    ggrepel::geom_text_repel() + theme(legend.position="none") + coord_fixed()
+}
+
