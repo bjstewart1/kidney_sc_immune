@@ -55,7 +55,7 @@ sce <- calculateQCMetrics(sce, feature_controls = list(
   "HB" = grep("^HB", rowData(sce)$Symbol)),
   percent_top = c(10, 50, 100, 200, 500))
 
-#initial cutoffs - see paper for compartment specific QC cutoffs used.
+#initial cutoffs -  paper methods for compartment specific QC cutoffs used.
 feature.drop <- sce$total_features_by_counts < 200
 mit.drop <- sce$pct_counts_Mito > 70
 master.drop <-  feature.drop | mit.drop 
@@ -65,8 +65,8 @@ sce <- sce[, master.drop == FALSE]
 sce <- seurat_normalise(sce)
 #####Feature selection
 #x_low and x_high selected based on assessment of distribution of mean expression values.
-x_low = 0.001
-x_high = 8
+x_low = 0.001 #x_low tune
+x_high = 8 #x_high tune
 hvg <- seurat_hvg(sce, x_low = x_low, x_high = x_high, y_cut = 1, num_bin = 20)
 metadata(sce)$hvg <- hvg$HVG
 #define genes that drive lots of technical variance.
@@ -84,7 +84,7 @@ metadata(sce)$hvg <- metadata(sce)$hvg[!metadata(sce)$hvg %in% coreExcludeEnsemb
 #do MNN batch correction in PCA space.
 set.seed(100)
 original <- pblapply(unique(sce$Experiment), function(e){exprs(sce)[metadata(sce)$hvg, sce$Experiment == e]})
-mnn <- do.call(fastMNN, c(original, pc.input = FALSE, auto.order=  TRUE, cos.norm = FALSE))
+mnn <- do.call(fastMNN, c(original, pc.input = FALSE, auto.order=  TRUE)) #auto-order = TRUE
 reducedDim(sce, "PCA") <- mnn$corrected
 
 #or for the mature kidney, we have calculated PCA and dropped low PCs
@@ -92,20 +92,20 @@ set.seed(100)
 sce <- runPCA(sce, ncomponents = 50, method = "irlba", exprs_values = "logcounts", feature_set = metadata(sce)$hvg, 
               scale_features = TRUE)
 plot(attr(reducedDim(sce, "PCA"), "percentVar"), pch = 15, col = "dodgerblue", xlab = "PC", ylab = "percentVar")
-n.PC = 10
+n.PC = 10 #10 for initial embedding
 abline(v = n.PC, col = "orange")
 reducedDim(sce, "PCA") <- reducedDim(sce, "PCA")[, 1:n.PC]
 
 #UMAP calculation
 umap.config <- umap.defaults
-umap.config$n_neighbors = 50
+umap.config$n_neighbors = 50 #50 for initial mature embedding 
 umap.out <- umap(reducedDim(sce, "PCA"), config = umap.config, method = "umap-learn")
 metadata(sce)$umap.out <- umap.out
 reducedDim(sce, "UMAP")  <- umap.out$layout
 
 #graph clustering based on the UMAP KNN graph
 metadata(sce)$graph <- get_umap_graph(metadata(sce)$umap.out)
-clusters <- cluster_SLM(metadata(sce)$graph)
+clusters <- cluster_SLM(metadata(sce)$graph) #resolution tune
 sce$cluster <- as.factor(clusters)
 
 ##### Celltype similarity assessment
