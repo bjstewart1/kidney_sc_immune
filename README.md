@@ -16,8 +16,6 @@ The following files pertain to this:
 This folder contains genesets used from external sources for use in the analysis.
 
 ## Data
-
-
-
-
-
+This folder contains:
+* Post-empty drops, post-soupX (mature) kidney, pre-QC data for mature kidney and fetal kidney
+* Annotated final sce objects for fetal and mature kidney
