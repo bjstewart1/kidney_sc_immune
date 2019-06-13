@@ -5,7 +5,7 @@ This is not a supported package.
 ## Anaylsis pipeline
 
 This repository contains the following files which illustrate the methodology in our paper.
-The functions and approaches described are assemmbled into a pipeline for the analysis of the data.
+The functions and approaches described are assembled into a pipeline.
 
 The following files pertain to this:
 * Functions.R (functions used - mostly wrappers for convenience)
