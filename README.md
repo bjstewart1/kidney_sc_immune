@@ -13,7 +13,7 @@ The following files pertain to this:
 
 ## Genesets
 
-This folder contains genesets used from external sources for use in the analysis.
+This folder contains genesets used from external sources for use in the analysis. Details in the README.md
 
 ## Data
 This folder contains:
