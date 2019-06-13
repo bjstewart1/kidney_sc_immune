@@ -1,7 +1,6 @@
 # kidney_sc_immune
 Repository for scRNAseq study of human kidneys
 
-1) 
 This repository contains the following files which illustrate the methodology in our paper.
 The functions and approaches described are assemmbled into a pipeline for the analysis of the data.
 
