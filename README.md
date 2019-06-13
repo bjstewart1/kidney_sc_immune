@@ -11,6 +11,10 @@ The following files pertain to this:
 * SC_analysis_pipeline.R (single cell analysis pipeline)
 * Pseudodepth_scores.R (approach to generate pseudodepth scores)
 
+## Genesets
+
+This folder contains genesets used from external sources for use in the analysis.
+
 ## Data
 
 
