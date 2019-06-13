@@ -1,5 +1,6 @@
 # kidney_sc_immune
 Repository for scRNAseq study of human kidneys
+Not a supported package.
 
 ## Anaylsis pipeline
 
