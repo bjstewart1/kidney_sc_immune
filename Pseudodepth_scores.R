@@ -78,18 +78,4 @@ gsva_plot <- pblapply(c(rownames(gsva_out)), function(g){
 })
 plot_grid(plotlist = gsva_plot, ncol = 4)
 
-#Plot chemokines in pseudospace
-chemokines <- c("CXCL12", "CXCL14", "CXCL1", "IL8", "CXCL5", "CXCL6", "CXCL17", "CX3CL1", "CCL20", "CCL2", "CCL15")
-rownames(gsva_in)[rownames(gsva_in) %in% chemokines]
-chemo_plot <- pblapply(chemokines, function(g){
-  ggplot(data.frame("Pseudodepth" = pt,
-                    "Expression" = scale(gsva_in[g, ])),
-         aes(x = Pseudodepth, y = Expression)) + geom_point(size = 1, color = "grey") + geom_smooth(color = "black", fill = "grey")  + ggtitle(g)
-})
-plot_grid(plotlist = chemo_plot, ncol = 4)
-
-
-
-
-
 
