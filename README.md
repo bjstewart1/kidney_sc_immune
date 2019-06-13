@@ -15,9 +15,3 @@ The following files pertain to this:
 
 ## Genesets
 This folder contains genesets used from external sources for use in the analysis. Details in the README.md
-
-## Data
-This folder contains:
-* Annotated final sce objects for fetal and mature kidney
-* Microarray dataset (kidney depth study - Lindgren et al.)
-* Processed TCGA data
