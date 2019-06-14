@@ -157,10 +157,6 @@ pheatmap(enrich_data, color = viridis::magma(20), border_color = NA, cluster_row
 #### Geneset scoring
 #as an example we use the M1/M2 score on a combined SCE of mature & fetal myeloiod found in Fig3, but this applies for all applications of this function
 M1_M2 <- readRDS("Data/Genesets/M1 M2 markers.RDS")
-#convert to ensembles
-genesets <- pblapply(M1_M2, function(x){
-  return(rowData(sce)[rowData(sce)$Symbol %in% x, "ID"])
-})
 M1_M2_scores <- seurat_test_genesets(sce, genelist = genesets)
 M1_M2_scores <- scale(M1_M2_scores[sce$celltype %in% c("Adult_MNP1", "Adult_MNP2", "Adult_MNP4", "Fetus_Macrophage 1", "Fetus_Macrophage 2", "Fetus_Monocyte"), ])
 means <- dplyr::group_by(data.frame(M1_M2_scores), factor(grps)) %>% dplyr::summarise_all(mean)
