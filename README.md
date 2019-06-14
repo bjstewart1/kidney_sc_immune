@@ -14,4 +14,4 @@ The following files pertain to this:
 * Pseudodepth_scores.R (approach to generate pseudodepth scores)
 
 ## Genesets
-This folder contains genesets used from external sources for use in the analysis. Details in the README.md
+This folder contains genesets used from external sources or analysis of external data for use in the analysis. Details in the README.md
