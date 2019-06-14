@@ -11,7 +11,7 @@ library(igraph)
 library(SoupX)
 library(pbapply)
 
-#plot out a feature on a ggplot - uses the viridis color scheme
+#plot out a feature on a ggplot - blue grey red color scheme that we like
 #' @param layout - a layout to use, be it PCA, tSNE, UMAP, graph layout
 #' @param gene - the gene symbol to use (character)
 #' @param sce - the sce object to reference
@@ -19,6 +19,8 @@ library(pbapply)
 #' @param ylab - the y axis label
 feature_plot <- function(layout, gene, sce, xlab = "Dim1", ylab="Dim2", size = 0.05, scale = FALSE){
   idx <- which(rowData(sce)$Symbol == gene)
+  set.seed(100)
+  #this prevents biased overplotting
   scramble <- sample(1:nrow(layout), nrow(layout))
   if(scale == TRUE){
     exprs_in <- scale(exprs(sce)[idx, scramble ])
@@ -47,6 +49,8 @@ feature_violin_plot <- function(sce, gene, group){
 #' @param xlab - the x axis label
 #' @param ylab - the y axis label
 factor_plot <- function(layout, factor, xlab = "Dim1", ylab ="Dim2", size = 0.05){
+  set.seed(100)
+  #this prevents biased overplotting
   scramble <- sample(1:nrow(layout), nrow(layout))
   ggplot(data.frame("x" = layout[scramble, 1], "y" = layout[scramble, 2], "Factor" = as.factor(factor)[scramble]), 
          aes(x = x, y=y, col = Factor)) + geom_point(pch=19, cex=size) + xlab(xlab) +ylab(ylab)+ theme_classic() + 
@@ -73,6 +77,8 @@ average.coords <- function(layout, groups){
 #' @param ylab - y axis label
 annotated_factor_plot <- function(layout, factor, xlab = "Dim1", ylab = "Dim2", size = 0.05){
   av.coords  <- average.coords(layout, groups = factor)
+  set.seed(100)
+  #this prevents biased overplotting
   scramble <- sample(1:nrow(layout), nrow(layout))
   ggplot(data.frame("x" = layout[scramble, 1], "y" = layout[scramble, 2], "Factor" = as.factor(factor)[scramble]), 
          aes(x = x, y=y, col = Factor)) + geom_point(pch=19, cex=size) + xlab(xlab) +ylab(ylab)+ theme_classic() + 
